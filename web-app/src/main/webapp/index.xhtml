@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:head><title>Benefit Requests</title></h:head>
+<h:body>
+    <h:form id="form">
+        <p:panel header="Benefit Requests teste ">
+            <p:dataTable id="requests" value="#{benefitRequestBean.requests}" var="benefitRequest">
+                <p:column headerText="ID">
+                    <h:outputText value="#{benefitRequest.id}"/>
+                </p:column>
+                <p:column headerText="Employee">
+                    <h:outputText value="#{benefitRequest.employeeName}"/>
+                </p:column>
+                <p:column headerText="Benefit">
+                    <h:outputText value="#{benefitRequest.benefitType}"/>
+                </p:column>
+                <p:column headerText="Amount">
+                    <h:outputText value="#{benefitRequest.amount}">
+                        <f:convertNumber type="currency" currencySymbol="R$ "/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{benefitRequest.status}"/>
+                </p:column>
+                <p:column headerText="Action">
+                    <p:commandButton value="Marcar como analisada"
+                                     action="#{benefitRequestBean.markReviewed(benefitRequest.id)}"
+                                     update="requests"
+                                     rendered="#{benefitRequest.status ne 'REVIEWED'}"
+                                     icon="pi pi-check"/>
+                    <h:outputText value="Analisada" rendered="#{benefitRequest.status eq 'REVIEWED'}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
